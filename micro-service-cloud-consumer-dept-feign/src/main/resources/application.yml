@@ -1,0 +1,43 @@
+server:
+  port: 92 #端口号
+
+############################################# Spring Cloud Ribbon 负载均衡配置##########################
+feign:
+  hystrix:
+    enabled: true #开启客户端 hystrix
+  client:
+    config:
+      default:
+        ConnectTimeOut: 6000
+        ReadTimeOut: 6000
+
+ribbon:
+  ReadTimeout: 6000 #建立连接所用的时间，适用于网络状况正常的情况下，两端两端连接所用的时间
+  ConnectionTimeout: 6000 #建立连接后，服务器读取到可用资源的时间
+
+logging:
+  level:
+    #feign 日志以什么样的级别监控该接口
+    net.biancheng.c.service.DeptFeignService: debug
+
+eureka:
+  client:
+    register-with-eureka: false #本微服务为服务消费者，不需要将自己注册到服务注册中心
+    fetch-registry: true  #本微服务为服务消费者，需要到服务注册中心搜索服务
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/ #服务注册中心集群
+
+######################配置请求超时时间##########################
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 7000
+    ####################配置具体方法超时时间 为 3 秒########################
+    DeptHystrixService#deptInfo_Timeout(Integer):
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000

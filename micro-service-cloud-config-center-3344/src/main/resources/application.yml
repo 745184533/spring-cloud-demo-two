@@ -1,0 +1,35 @@
+server:
+  port: 3344 #端口号
+spring:
+  application:
+    name: spring-cloud-config-center #服务名
+  cloud:
+    config:
+      server:
+        git:
+          # Git 地址，https://gitee.com/java-mohan/springcloud-config.git
+          # 码云（gitee）地址 uri: https://github.com/javmohan/springcloud-config.git  (github 站点访问较慢，因此这里我们使用 gitee)
+#          uri: git@github.com:745184533/springcloud-config.git
+#          ignoreLocalSshSettings: true  #为了激活基于属性的SSH配置
+#            #          hostKey: someKey
+#            #          hostKeyAlgorithm: ssh-rsa
+#            #          strictHostKeyChecking: true
+#          privateKey: |
+#                       -----BEGIN RSA PRIVATE KEY-----
+#                       SHA256:QGOb6eNeIp26IhCn0wE8Aq2p+yJDOgKnZhad/Fgl3ts
+#                       -----END RSA PRIVATE KEY-----
+          uri: https://github:com/745184533/springcloud-config.git
+          # 如果Git仓库为公开仓库，可以不填写用户名和密码，如果是私有仓库需要填写
+          username: 745184533@qq.com
+          password: 526874lyf
+          #仓库名
+          search-paths:
+            - springcloud-config
+          force-pull: true
+      #分支名
+      label: main
+eureka:
+  client: #将客户端注册到 eureka 服务列表内
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,
+                    http://eureka7003.com:7003/eureka/  #将服务注册到 Eureka 集群
